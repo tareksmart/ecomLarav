@@ -18,30 +18,32 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('dashboard');
+    return view('welcome');
+});
+Route::get('/home', function () {
+    return view('home');
 });
 // Route::get('users', [get::class,'get']);
 // Route::get('users/post',[get::class,'post']);
 // Route::get('users/edit',[get::class,'edit']);
 
-Route::controller(get::class)->group(function(){
+Route::controller(get::class)->group(function () {
     Route::get('users', 'get');
-    Route::get('users/post','post');
-    Route::get('users/edit/{id}','edit');
+    Route::get('users/post', 'post');
+    Route::get('users/edit/{id}', 'edit');
 });
-Route::controller(db::class)->group(function(){
-Route::get('db/create','create');
-Route::get('db/edite','edite');
+Route::controller(db::class)->group(function () {
+    Route::get('db/create', 'create');
+    Route::get('db/edite', 'edite');
 });
-Route::resource('emp',crud::class)->only('create');
+Route::resource('emp', crud::class)->only('create');
 
-Route::controller(PostsController::class)->group(function (){
-    Route::get('posts/create','create')->name('create');
-    Route::post('posts/insert','insert')->name('post.insert');
-    Route::get('posts/allPosts','getData')->name('data');
+Route::controller(PostsController::class)->group(function () {
+    Route::get('posts/create', 'create')->name('create');
+    Route::post('posts/insert', 'insert')->name('post.insert');
+    Route::get('posts/allPosts', 'getData')->name('data');
 
-    Route::get('posts/edit/{id}','edite')->name('posts.edite');
-    Route::put('posts/ed/{id}','ed')->name('ed');
-    Route::get('posts/delete/{id}','delete')->name('del');
+    Route::get('posts/edit/{id}', 'edite')->name('posts.edite');
+    Route::put('posts/ed/{id}', 'ed')->name('ed');
+    Route::get('posts/delete/{id}', 'delete')->name('del');
 });
-
