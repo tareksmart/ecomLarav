@@ -67,33 +67,33 @@ scratch. This page gets rid of all links and provides the needed markup only.
   </aside>
   <!-- Content Header (Page header) -->
 
-  <div class="content-header">
-    
-    <div class="container-fluid">
-     
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0">@yield('title')</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-        
-          <ol class="breadcrumb float-sm-right">
-        
-@section('breadcrumb')
-<li class="breadcrumb-item"><a href="#">Home</a></li>
-       
-        @show
-          </ol>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </div>
+
 
   <!-- /.content-header -->
   <!-- Content Wrapper. Contains page content -->
-
+    <div class="wrapper">
   <div class="content-wrapper">
-   
+      <div class="content-header">
+
+          <div class="container-fluid">
+
+              <div class="row mb-2">
+                  <div class="col-sm-6">
+                      <h1 class="m-0">@yield('title')</h1>
+                  </div><!-- /.col -->
+                  <div class="col-sm-6">
+
+                      <ol class="breadcrumb float-sm-right">
+
+                          @section('breadcrumb')
+                              <li class="breadcrumb-item"><a href="#">Home</a></li>
+
+                          @show
+                      </ol>
+                  </div><!-- /.col -->
+              </div><!-- /.row -->
+          </div><!-- /.container-fluid -->
+      </div>
     {{-- yield ------------------------------------------------------------}}
     <div class="content">
       <div class="container-fluid">
@@ -102,7 +102,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </div>
   </div>
   <!-- /.content-wrapper -->
-
+        <!-- ./wrapper -->
+    </div>
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
