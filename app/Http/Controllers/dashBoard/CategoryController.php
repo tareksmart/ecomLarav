@@ -13,9 +13,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-            $category=category::all();//يسحب كل الاقسام عن طريق اموديل
-        return view('dashboard.category.index',compact($category));
-       //return 'index page';
+            $categories=Category::all();//يسحب كل الاقسام عن طريق اموديل
+  return view('dashboard.category.index',compact('categories'));
+//       return $categories;
     }
 
     /**
@@ -23,7 +23,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.category.create');
     }
 
     /**
