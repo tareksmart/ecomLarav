@@ -1,12 +1,10 @@
 @extends('layout.dashboard')
 @section('title','create')
-@section('breadcrumb')
-@parent
-<li class="breadcrumb-item active">create</li>
-@endsection
+
 
 @section('content')
 
+ 
 <form action="{{route('category.store')}}" method="post">
 @csrf
 <div class="form-group">
@@ -50,4 +48,10 @@
     <button type="submit" class="btn btn-primary">save</button>
 </div>
 </form>
+
+
+@endsection
+@section('breadcrumb')
+@parent
+<li class="breadcrumb-item active">create</li>
 @endsection
