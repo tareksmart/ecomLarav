@@ -32,7 +32,12 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //طريقة1
+        // $cate=new category($request->all());
+        // $cate->save();
+        //طريقة2
+        $cat=category::create($request->all());
+        return redirect()->route('category.index');
     }
 
     /**
