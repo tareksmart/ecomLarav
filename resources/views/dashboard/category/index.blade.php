@@ -1,11 +1,16 @@
 @extends('layout.dashboard')
 @section('title','category')
 
-
 @section('content')
 <div class="mb-3">
     <a href="{{route('category.create')}}" class="btn btn-sm btn-outline-primary">create</a>
     </div>
+    {{-- قيمة السيشن المرسلة عن طريق دالة with --}}
+@if (session()->has('success'))
+<div class="alert alert-success">
+    {{session('success')}}
+</div>
+@endif
   <table class="table">
     <thread>
         <tr>
@@ -21,17 +26,23 @@
         @forelse ($categories as $item)
         <tr>
             <td></td>
-            <td>{{$item->ID}}</td>
+            <td>{{$item->id}}</td>
             <td>{{$item->name}}</td>
             <td>{{$item->parentId}}</td>
             <td>{{$item->created_at}}</td>
             <td>
-                <a href="{{route('category.edit')}}" class="btn btn-sm btn-outline-success">Edite</a>
+                <a href="{{route('category.edit',$item->id)}}" class="btn btn-sm btn-outline-success">Edite</a>
             </td>
             <td>
-                <form action="{{route('category.destroy')}}" method="post">
+                {{--$item->id تم ارساله براوت التعديل والحذف لانه مطلوب--}}
+                <form action="{{route('category.destroy',$item->id)}}" method="post">
                 @csrf
-                {{-- to make post method do delete methode like aroute --}}
+                {{-- to make post method do delete methode like aroute
+                    @method لتحويل عمل الروت 
+                    post
+                    الى
+                    delete
+                    --}}
                 @method('delete')
                 <button class="btn-sm btn-outline-danger">delete</button>
                 </form>
