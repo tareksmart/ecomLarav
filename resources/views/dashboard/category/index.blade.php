@@ -2,8 +2,9 @@
 @section('title','category')
 
 @section('content')
+{{-- <div class="wrapper"> --}}
 <div class="mb-3">
-    <a href="{{route('category.create')}}" class="btn btn-sm btn-outline-primary">create</a>
+    <a href="{{route('dashboard.category.create')}}" class="btn btn-sm btn-outline-primary">create</a>
     </div>
     {{-- قيمة السيشن المرسلة عن طريق دالة with --}}
 @if (session()->has('success'))
@@ -31,11 +32,11 @@
             <td>{{$item->parentId}}</td>
             <td>{{$item->created_at}}</td>
             <td>
-                <a href="{{route('category.edit',$item->id)}}" class="btn btn-sm btn-outline-success">Edite</a>
+                <a href="{{route('dashboard.category.edit',$item->id)}}" class="btn btn-sm btn-outline-success">Edite</a>
             </td>
             <td>
                 {{--$item->id تم ارساله براوت التعديل والحذف لانه مطلوب--}}
-                <form action="{{route('category.destroy',$item->id)}}" method="post">
+                <form action="{{route('dashboard.category.destroy',$item->id)}}" method="post">
                 @csrf
                 {{-- to make post method do delete methode like aroute
                     @method لتحويل عمل الروت 
@@ -59,7 +60,7 @@
     
     </tbody>
   </table>
-
+{{-- </div> --}}
 @endsection
 
 @section('breadcrumb')

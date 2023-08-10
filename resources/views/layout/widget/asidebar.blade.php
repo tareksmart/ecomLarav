@@ -12,7 +12,7 @@
         </a>
         <ul class="nav nav-treeview">
           <li class="nav-item">
-            <a href="{{route('category.index')}}" class="nav-link active">
+            <a href="{{route('dashboard.category.index')}}" class="nav-link active">
               <i class="far fa-circle nav-icon"></i>
               <p>categories</p>
             </a>

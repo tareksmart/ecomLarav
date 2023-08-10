@@ -1,21 +1,21 @@
 @extends('layout.dashboard')
-@section('title','create')
+@section('title','edite')
 
 
 @section('content')
 <div class="wrapper">
  
-<form action="{{route('dashboard.category.store')}}" method="post">
+<form action="{{route('dashboard.category.update',$category->id)}}" method="post">
 @csrf
 <div class="form-group">
 <label for="categoryName">Category Name</label>
-<input type="text" name="name" id="" class="form-control">
+<input type="text" name="name" id="" class="form-control" value="$category->name">
 </div>
 <div class="form-group">
     <label for="">Category Parent</label>
     <select name="parentId" id="" class="form-control form-select">
         <option value="">Primary Category</option>
-@foreach ($parents as $item)
+@foreach ($category as $item)
 <option value="{{$item->id}}">{{$item->name}}</option>
 @endforeach
         

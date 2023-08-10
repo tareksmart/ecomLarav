@@ -5,7 +5,7 @@ home starter page
  
 {{-- @section('pageTitle','Home') --}}
 @section('content')
-<div class="wrapper">
+{{-- <div class="wrapper"> --}}
 
   <!-- Content Wrapper. Contains page content -->
 
@@ -72,7 +72,7 @@ home starter page
     
   <!-- /.content-wrapper -->
 
-</div>
+{{-- </div> --}}
 <!-- ./wrapper -->
 @endsection
 @section('breadcrumb')

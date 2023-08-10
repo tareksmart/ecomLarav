@@ -86,7 +86,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <ol class="breadcrumb float-sm-right">
 
                           @section('breadcrumb')
-                              <li class="breadcrumb-item"><a href="#">Home</a></li>
+                              <li class="breadcrumb-item"><a href="{{route('dashboard.category.index')}}">Home</a></li>
 
                           @show
                       </ol>
@@ -97,10 +97,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
     {{-- yield ------------------------------------------------------------}}
     <div class="content">
       <div class="container-fluid">
+       
         @yield('content')
       </div>
     </div>
   </div>
+
   <!-- /.content-wrapper -->
         <!-- ./wrapper -->
     </div>
