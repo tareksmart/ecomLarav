@@ -47,7 +47,7 @@ class CategoryController extends Controller
         // $cate->save();
         //طريقة2
         $cat=category::create($request->all());
-        return redirect()->route('category.index')->with('success','category added successfully');//
+        return redirect()->route('dashboard.category.index')->with('success','category added successfully');//
         //flash message 
         //with ترسل session الى صفحة ال index
     }
@@ -66,7 +66,13 @@ class CategoryController extends Controller
     public function edit(string $id)
     {
         $category=category::find($id);
-        return view('dashboard.category.edit',compact('category'));
+        //هات كل الاقسام ماعدا القسم اللى انا اديتك ال id بتاعه
+        //وخزنه فى المتغير $parents
+        //عشان نملى بيه ال كومبوبوكس او هنا اسمه Select
+        $parents=category::where('id','<>',$id)->get();
+        
+        
+        return view('dashboard.category.edit',compact(['category','parents']));
     }
 
     /**
@@ -74,7 +80,17 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->merge([//الحاق اى بيانات غير مذكورة بالفورم
+            'slug'=>Str::slug($request->post('name'))//دالة ال slug بتحذف اى مسافة او علامات مميزة مثل التعجب تخلى كل الحروف كابيتال
+            //هنا سجلنا فى حقل ال slug اسم التصنيف مجرد من اى شىء لانه سوف يظهر فى الرابط
+            //
+        ]);
+        //احضار القسم المراد تعديله
+        $category=category::find($id);
+        $category->update($request->all());//ِرط حقول قاعدة البيانات مثل حقول الفورم نفس الاسماء
+        return redirect()->route('dashboard.category.index')->with('success','category updated successfully');
+        //طريقة اخرى للتعديل
+        //$category->fill($request->all())->save();
     }
 
     /**

@@ -1,28 +1,41 @@
 @extends('layout.dashboard')
 @section('title','edite')
-
-
+@section('breadcrumb')
+@parent
+<li class="breadcrumb-item active">categories</li>
+<li class="breadcrumb-item active">edit categorey</li>
+@endsection
 @section('content')
 <div class="wrapper">
  
 <form action="{{route('dashboard.category.update',$category->id)}}" method="post">
 @csrf
+{{-- //convert method from post to put --}}
+@method('put')
+
 <div class="form-group">
 <label for="categoryName">Category Name</label>
-<input type="text" name="name" id="" class="form-control" value="$category->name">
+
+<input type="text" name="name" id="" class="form-control" value="{{$category->name}}">
 </div>
 <div class="form-group">
     <label for="">Category Parent</label>
     <select name="parentId" id="" class="form-control form-select">
         <option value="">Primary Category</option>
-@foreach ($category as $item)
-<option value="{{$item->id}}">{{$item->name}}</option>
+        {{-- @selected($category->id == $item->id)
+            معناها لو القسم المرسل $category->id
+            بيعمل لووب على الاقسام المرسلة من $parent 
+            بيقارنه مع $item->id
+            لوبيساويه اعمل اختيار لل$item->id
+            --}}
+@foreach ($parents as $parent)
+<option value="{{$parent->id}}" @selected($category->parentId == $parent->id)>{{$parent->name}}</option>
 @endforeach
         
     </select>
 </div>
 <div class="form-group"><label for="">description</label>
-<textarea name="description" id="" class="form-control"></textarea>
+<textarea name="description" id="" class="form-control">{{$category->description}}</textarea>
 </div>
 
 <div class="form-group">
@@ -32,13 +45,13 @@
 <div class="form-group">
     <label for="">status</label>
     <div class="form-check">
-        <input class="form-check-input" type="radio" name="status" id="" value="active" checked>
+        <input class="form-check-input" type="radio" name="status" id="" value="active" @checked($category->status == 'active')>
         <label class="form-check-label" for="">
         active
         </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="radio" name="status" id="" value="archived">
+        <input class="form-check-input" type="radio" name="status" id="" value="archived" @checked($category->status == 'archived')>
         <label class="form-check-label" for="">
         archived
         </label>
@@ -50,8 +63,4 @@
 </form>
 
 </div>
-@endsection
-@section('breadcrumb')
-@parent
-<li class="breadcrumb-item active">create</li>
 @endsection

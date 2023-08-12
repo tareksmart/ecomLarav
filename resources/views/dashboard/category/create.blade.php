@@ -53,5 +53,6 @@
 @endsection
 @section('breadcrumb')
 @parent
-<li class="breadcrumb-item active">create</li>
+<li class="breadcrumb-item active">categories</li>
+<li class="breadcrumb-item active">create category</li>
 @endsection
