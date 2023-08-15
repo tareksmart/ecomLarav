@@ -12,4 +12,6 @@ class category extends Model
     protected $table='category';
     protected $_fillable=['name','parentId','description','status','slug'];
     protected $guarded=['_token'];
+
+
 }

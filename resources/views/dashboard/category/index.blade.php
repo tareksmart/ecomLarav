@@ -3,7 +3,7 @@
 
 @section('content')
 {{-- <div class="wrapper"> --}}
-<div class="mb-3">
+<div class="mb-5">
     <a href="{{route('dashboard.category.create')}}" class="btn btn-sm btn-outline-primary">create</a>
     </div>
     {{-- قيمة السيشن المرسلة عن طريق دالة with --}}
@@ -11,6 +11,14 @@
 <div class="alert alert-success">
     {{session('success')}}
 </div>
+
+@endif
+
+@if (session()->has('info'))
+    <div class="alert alert-info">
+        {{session('info')}}
+    </div>
+
 @endif
   <table class="table">
     <thread>
@@ -39,13 +47,14 @@
                 <form action="{{route('dashboard.category.destroy',$item->id)}}" method="post">
                 @csrf
                 {{-- to make post method do delete methode like aroute
-                    @method لتحويل عمل الروت 
+                    @method لتحويل عمل الروت
                     post
                     الى
                     delete
                     --}}
                 @method('delete')
                 <button class="btn-sm btn-outline-danger">delete</button>
+
                 </form>
             </td>
         </tr>
@@ -57,7 +66,7 @@
     </td>
 </tr>
 @endforelse
-    
+
     </tbody>
   </table>
 {{-- </div> --}}
@@ -68,4 +77,4 @@
     <li class="breadcrumb-item active">Categories</li>
 @endsection
 
-    
+
