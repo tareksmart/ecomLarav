@@ -12,9 +12,15 @@
             بيقارنه مع $item->id
             لوبيساويه اعمل اختيار لل$item->id
             --}}
-    @foreach ($parents as $item)
-    <option value="{{$item->id}}" @selected($category->parentId == $item->id)>{{$item->name}}</option>
-    @endforeach
+            
+            @foreach ($parents as $item)
+            <option value="{{$item->id}}"  @selected(
+            ($category->parentId == $item->id)
+            
+            )>{{$item->name}}</option>
+            @endforeach 
+          
+  
             
         </select>
     </div>

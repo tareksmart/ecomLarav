@@ -8,7 +8,7 @@
 @section('content')
 <div class="wrapper">
  
-<form action="{{route('dashboard.category.update',$category->id)}}" method="post">
+<form action="{{route('dashboard.category.update',$category->id)}}" method="post" enctype="multipart/form-data">
 @csrf
 {{-- //convert method from post to put --}}
 @method('put')

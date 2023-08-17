@@ -5,7 +5,7 @@
 @section('content')
 <div class="wrapper">
  
-<form action="{{route('dashboard.category.store')}}" method="post">
+<form action="{{route('dashboard.category.store')}}" method="post" enctype="multipart/form-data">
 @csrf
 @include('dashboard.category._form')
 </form>

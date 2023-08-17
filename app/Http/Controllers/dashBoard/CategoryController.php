@@ -27,7 +27,8 @@ class CategoryController extends Controller
     public function create()
     {
         $parents = category::all();
-        return view('dashboard.category.create', compact('parents'));
+        $category=new category();
+        return view('dashboard.category.create', compact(['parents','category']));
     }
 
     /**
@@ -44,6 +45,12 @@ class CategoryController extends Controller
             //هنا سجلنا فى حقل ال slug اسم التصنيف مجرد من اى شىء لانه سوف يظهر فى الرابط
             //
         ]);
+        if ($request->hasFile('image')) {
+            $file = $request->file('image'); //يرجع object
+            $path = $file->store('uploads', 'public'); //خزن الصورة فى فولدرuploads على ديسك public
+          $request['image']=$path;//استبدال
+        }
+    
         //طريقة1
         // $cate=new category($request->all());
         // $cate->save();
@@ -78,7 +85,7 @@ class CategoryController extends Controller
             return  redirect()->route('dashboard.category.index')->with('info', 'record not found');
         }
         //احضار كل الابهات ماعدا التصنيف المطلوب تعديله وابناء التصنيف المطلوب تعديله
-        $parents = category::where('id', '<>', $id)->where('parentId','<>',$id)->get();
+        $parents = category::where('id', '<>', $id)->where('parentId', '<>', $id)->get();
 
 
         return view('dashboard.category.edit', compact(['category', 'parents']));
