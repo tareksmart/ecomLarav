@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\category;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use mysql_xdevapi\Exception;
 
@@ -27,8 +28,8 @@ class CategoryController extends Controller
     public function create()
     {
         $parents = category::all();
-        $category=new category();
-        return view('dashboard.category.create', compact(['parents','category']));
+        $category = new category();
+        return view('dashboard.category.create', compact(['parents', 'category']));
     }
 
     /**
@@ -45,17 +46,19 @@ class CategoryController extends Controller
             //هنا سجلنا فى حقل ال slug اسم التصنيف مجرد من اى شىء لانه سوف يظهر فى الرابط
             //
         ]);
+        $data=$request->except('image');
         if ($request->hasFile('image')) {
             $file = $request->file('image'); //يرجع object
             $path = $file->store('uploads', 'public'); //خزن الصورة فى فولدرuploads على ديسك public
-          $request['image']=$path;//استبدال
+         $data['image']=$path;
+           
         }
-    
+
         //طريقة1
         // $cate=new category($request->all());
         // $cate->save();
         //طريقة2
-        $cat = category::create($request->all());
+        $cat = category::create($data);
         return redirect()->route('dashboard.category.index')->with('success', 'category added successfully'); //
         //flash message
         //with ترسل session الى صفحة ال index
@@ -104,9 +107,19 @@ class CategoryController extends Controller
         //احضار القسم المراد تعديله
 
         $category = category::find($id);
-
-
-        $category->update($request->all()); //ِرط حقول قاعدة البيانات مثل حقول الفورم نفس الاسماء
+        $data=$request->except('image');
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $path = $file->store('uploads', 'public');
+            $data['image'] = $path;
+        }
+        $oldImage = $category->image;
+      
+        $category->update($data); //ِرط حقول قاعدة البيانات مثل حقول الفورم نفس الاسماء
+        if ($oldImage  && isset($data['image'])) //لوفى صورة جديدة وقديمة احذف القديمه
+        {
+            Storage::disk('public')->delete($oldImage); //حذف الصورة من ال public
+        }
         return redirect()->route('dashboard.category.index')->with('success', 'category updated successfully');
         //طريقة اخرى للتعديل
         //$category->fill($request->all())->save();
