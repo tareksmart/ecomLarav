@@ -28,9 +28,12 @@
     <textarea name="description" id="" class="form-control">{{$category->description??''}}</textarea>
     </div>
     
+    {{-- accept="image/*" تظهر الصور فقط عند البروزينج --}}
     <div class="form-group">
         <label for="">image</label>
-        <input type="file" name="image" id="" class="form-control-file">
+        <input type="file" name="image" id="" class="form-control-file" accept="image/*">
+        <br></br>
+        <img src="{{asset('storage/'.$category->image)}}" alt="" height="60">
     </div>
     <div class="form-group">
         <label for="">status</label>

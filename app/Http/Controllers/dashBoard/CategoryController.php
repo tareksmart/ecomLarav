@@ -46,14 +46,9 @@ class CategoryController extends Controller
             //هنا سجلنا فى حقل ال slug اسم التصنيف مجرد من اى شىء لانه سوف يظهر فى الرابط
             //
         ]);
-        $data=$request->except('image');
-        if ($request->hasFile('image')) {
-            $file = $request->file('image'); //يرجع object
-            $path = $file->store('uploads', 'public'); //خزن الصورة فى فولدرuploads على ديسك public
-         $data['image']=$path;
-           
-        }
-
+        $data = $request->except('image');
+     
+        $data['image'] = $this->uploadImage($request);
         //طريقة1
         // $cate=new category($request->all());
         // $cate->save();
@@ -107,14 +102,13 @@ class CategoryController extends Controller
         //احضار القسم المراد تعديله
 
         $category = category::find($id);
-        $data=$request->except('image');
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $path = $file->store('uploads', 'public');
-            $data['image'] = $path;
-        }
+        $data = $request->except('image');
+       
+           
+            $data['image'] = $this->uploadImage($request);
+        
         $oldImage = $category->image;
-      
+
         $category->update($data); //ِرط حقول قاعدة البيانات مثل حقول الفورم نفس الاسماء
         if ($oldImage  && isset($data['image'])) //لوفى صورة جديدة وقديمة احذف القديمه
         {
@@ -133,8 +127,20 @@ class CategoryController extends Controller
         //طريقة1
         $cate = category::findOrFail($id);
         $cate->delete();
+        //حذف الصورة من فولدر ابلود
+        if ($cate->image) {
+            Storage::disk('public')->delete($cate->image);
+        }
         //طريقة 2
         // category::destroy($id);//يتم حذف السجل بناءا على برمرى كى مع الاعتبار ان البرمرى فى موديل مثل اللى فى الجدول
         return redirect()->route('dashboard.category.index')->with('info', 'category deleted successfully');
+    }
+    public function uploadImage(Request $request){
+        if (!$request->hasFile('image')){
+            return;//لومفيش صورة جايه من الفرونت اطلع
+        }
+        $file=$request->file('image');
+        $path=$file->store('upload','public');
+        return $path;
     }
 }
