@@ -1,6 +1,22 @@
+@if ($errors->any())
+
+        <div class="alert alert-danger">
+            <h3>Error occured!!</h3>
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{$error}}</li>
+                @endforeach
+            </ul>
+
+        </div>
+
+@endif
 <div class="form-group">
     <label for="categoryName">Category Name</label>
     <input type="text" name="name" id="" class="form-control" value="{{$category->name??''}}">
+    @error('name')
+    <i @style()>*</i>
+    @enderror
     </div>
     <div class="form-group">
         <label for="">Category Parent</label>
@@ -8,26 +24,26 @@
             <option value="">Primary Category</option>
              {{-- @selected($category->id == $item->id)
             معناها لو القسم المرسل $category->id
-            بيعمل لووب على الاقسام المرسلة من $parent 
+            بيعمل لووب على الاقسام المرسلة من $parent
             بيقارنه مع $item->id
             لوبيساويه اعمل اختيار لل$item->id
             --}}
-            
+
             @foreach ($parents as $item)
             <option value="{{$item->id}}"  @selected(
             ($category->parentId == $item->id)
-            
+
             )>{{$item->name}}</option>
-            @endforeach 
-          
-  
-            
+            @endforeach
+
+
+
         </select>
     </div>
     <div class="form-group"><label for="">description</label>
     <textarea name="description" id="" class="form-control">{{$category->description??''}}</textarea>
     </div>
-    
+
     {{-- accept="image/*" تظهر الصور فقط عند البروزينج --}}
     <div class="form-group">
         <label for="">image</label>

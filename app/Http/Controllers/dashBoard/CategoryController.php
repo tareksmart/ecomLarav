@@ -44,9 +44,9 @@ class CategoryController extends Controller
 
         $request->validate(
            [ 'name'=>['string','required','min:3','max:255'],
-           'parenId'=>['int','exists:categories,id'],//لازم id فى جدول التصنيف يكوم موجود
-           'image'=>['image','max:1048576','dimention:min_width=100,min_height=100'],//نوع صورة- حجم اقل من 1ميجا-ابعاد 100 عرض 100طول اقل حاجة
-           'status'=>['in:active,archived']
+           'parenId'=>['int','exists:category,id'],//لازم id فى جدول التصنيف يكوم موجود
+           'image'=>['image','max:1048576','dimensions:min_width=100,min_height=100'],//نوع صورة- حجم اقل من 1ميجا-ابعاد 100 عرض 100طول اقل حاجة
+           'status'=>['in:active,archived']//in عبارة قائمة
            ]
         );//اضافة حقول الفورم
         $request->merge([ //الحاق اى بيانات غير مذكورة بالفورم
