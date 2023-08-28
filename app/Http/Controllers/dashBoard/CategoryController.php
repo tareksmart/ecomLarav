@@ -41,7 +41,11 @@ class CategoryController extends Controller
         // من فورم نوعها
         //post
         //ممكن يكون فى متغير او بارامتر اسمه name فى مكان تانى احنا كده خصصننا
-
+//هنا الفالىديت لو حصل exception
+// مش هيكمل باقى الاكواد تحت
+ //وبيمسح خانات الادخال من الفورمة بيخزنها مؤقتا فى Session
+        //ممكن نسحب البينات عن طريق session('session name).get()
+        //لكن فى دالة اسمها old بترجع الداتا من الsession
         $request->validate(
            [ 'name'=>['string','required','min:3','max:255'],
            'parenId'=>['int','exists:category,id'],//لازم id فى جدول التصنيف يكوم موجود

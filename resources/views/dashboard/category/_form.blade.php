@@ -1,3 +1,4 @@
+{{--اى خطا بيحصل بيتم تخزينه فى المتغير$errors--}}
 @if ($errors->any())
 
         <div class="alert alert-danger">
@@ -13,10 +14,14 @@
 @endif
 <div class="form-group">
     <label for="categoryName">Category Name</label>
-    <input type="text" name="name" id="" class="form-control" value="{{$category->name??''}}">
-    @error('name')
-    <i @style()>*</i>
-    @enderror
+{{--   من ال class
+ لوالحقل name فى مشكلة يعطى لون احمر وعلامة تعجب بحقل التصنيف--}}
+{{--    شرح https://laravel.com/docs/10.x/blade#conditional-classes--}}
+    <input type="text" name="name" id="" @class([
+        'form-control',
+        'is-invalid'=>$errors->has('name')
+])  value="$category->name{{old('name')??$category->name??''}}
+
     </div>
     <div class="form-group">
         <label for="">Category Parent</label>
@@ -44,10 +49,12 @@
     <textarea name="description" id="" class="form-control">{{$category->description??''}}</textarea>
     </div>
 
-    {{-- accept="image/*" تظهر الصور فقط عند البروزينج --}}
+    {{-- accept="image/*" تظهر الصور فقط عند البروزينج
+
+    --}}
     <div class="form-group">
         <label for="">image</label>
-        <input type="file" name="image" id="" class="form-control-file" accept="image/*">
+        <input type="file" name="image" id="" class="form-control-file is-invalid" accept="image/*">
         <br></br>
         <img src="{{asset('storage/'.$category->image)}}" alt="" height="60">
     </div>
