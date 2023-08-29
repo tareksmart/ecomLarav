@@ -36,23 +36,13 @@ class CategoryController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    { //$request->post('name') معناها هات الداتا اللى جايا من الحقل اللى اسمه
+    {
+        $this->validateForm($request);
+        //$request->post('name') معناها هات الداتا اللى جايا من الحقل اللى اسمه
         //name
         // من فورم نوعها
         //post
         //ممكن يكون فى متغير او بارامتر اسمه name فى مكان تانى احنا كده خصصننا
-//هنا الفالىديت لو حصل exception
-// مش هيكمل باقى الاكواد تحت
- //وبيمسح خانات الادخال من الفورمة بيخزنها مؤقتا فى Session
-        //ممكن نسحب البينات عن طريق session('session name).get()
-        //لكن فى دالة اسمها old بترجع الداتا من الsession
-        $request->validate(
-           [ 'name'=>['string','required','min:3','max:255'],
-           'parenId'=>['int','exists:category,id'],//لازم id فى جدول التصنيف يكوم موجود
-           'image'=>['image','max:1048576','dimensions:min_width=100,min_height=100'],//نوع صورة- حجم اقل من 1ميجا-ابعاد 100 عرض 100طول اقل حاجة
-           'status'=>['in:active,archived']//in عبارة قائمة
-           ]
-        );//اضافة حقول الفورم
         $request->merge([ //الحاق اى بيانات غير مذكورة بالفورم
             'slug' => Str::slug($request->post('name')) //دالة ال slug بتحذف اى مسافة او علامات مميزة مثل التعجب تخلى كل الحروف كابيتال
             //هنا سجلنا فى حقل ال slug اسم التصنيف مجرد من اى شىء لانه سوف يظهر فى الرابط
@@ -106,6 +96,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
+       $this-> validateForm($request);
         $request->merge([ //الحاق اى بيانات غير مذكورة بالفورم
             'slug' => Str::slug($request->post('name')) //دالة ال slug بتحذف اى مسافة او علامات مميزة مثل التعجب تخلى كل الحروف كابيتال
             //هنا سجلنا فى حقل ال slug اسم التصنيف مجرد من اى شىء لانه سوف يظهر فى الرابط
@@ -155,5 +146,20 @@ class CategoryController extends Controller
         $file = $request->file('image');
         $path = $file->store('upload', 'public');
         return $path;
+    }
+    public function validateForm(Request $request){
+        //هنا الفالىديت لو حصل exception
+// مش هيكمل باقى الاكواد تحت
+        //وبيمسح خانات الادخال من الفورمة بيخزنها مؤقتا فى Session
+        //ممكن نسحب البينات عن طريق session('session name).get()
+        //لكن فى دالة اسمها old بترجع الداتا من الsession
+        $request->validate(
+            [ 'name'=>['string','required','min:3','max:255'],
+                'parenId'=>['int','exists:category,id'],//لازم id فى جدول التصنيف يكوم موجود
+                'image'=>['image','max:1048576','dimensions:min_width=100,min_height=100'],//نوع صورة- حجم اقل من 1ميجا-ابعاد 100 عرض 100طول اقل حاجة
+                'status'=>['in:active,archived']//in عبارة قائمة
+            ]
+        );//اضافة حقول الفورم
+
     }
 }

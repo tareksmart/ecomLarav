@@ -20,8 +20,8 @@
     <input type="text" name="name" id="" @class([
         'form-control',
         'is-invalid'=>$errors->has('name')
-])  value="$category->name{{old('name')??$category->name??''}}
-
+])  value="{{old('name',$category->name)}}">
+{{-- old function old(session value-القيمة المؤقته عند حدوث خطا,default value-القيمة الافتراضيةلوالقيمة المؤقته فارغة)--}}
     </div>
     <div class="form-group">
         <label for="">Category Parent</label>
@@ -35,10 +35,9 @@
             --}}
 
             @foreach ($parents as $item)
-            <option value="{{$item->id}}"  @selected(
-            ($category->parentId == $item->id)
-
-            )>{{$item->name}}</option>
+            <option value="{{$item->id}}"
+                @selected((old('parentId',$category->parentId) == $item->id))>
+                {{$item->name}}</option>
             @endforeach
 
 
@@ -46,7 +45,7 @@
         </select>
     </div>
     <div class="form-group"><label for="">description</label>
-    <textarea name="description" id="" class="form-control">{{$category->description??''}}</textarea>
+    <textarea name="description" id="" class="form-control">{{old('description',$category->description)}}</textarea>
     </div>
 
     {{-- accept="image/*" تظهر الصور فقط عند البروزينج
@@ -61,13 +60,13 @@
     <div class="form-group">
         <label for="">status</label>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="status" id="" value="active" checked>
+            <input class="form-check-input" type="radio" name="status" id="" value="active" @checked(old('status',$category->status)=='active')>
             <label class="form-check-label" for="">
             active
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="status" id="" value="archived">
+            <input class="form-check-input" type="radio" name="status" id="" value="archived" @checked(old('status',$category->status)=='archived')>
             <label class="form-check-label" for="">
             archived
             </label>
