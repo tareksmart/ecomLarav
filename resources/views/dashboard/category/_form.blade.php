@@ -53,7 +53,7 @@
     --}}
     <div class="form-group">
         <label for="">image</label>
-        <input type="file" name="image" id="" class="form-control-file is-invalid" accept="image/*">
+        <input type="file" name="image"  id="" class="form-control-file is-invalid" accept="image/*">
         <br></br>
         <img src="{{asset('storage/'.$category->image)}}" alt="" height="60">
     </div>
