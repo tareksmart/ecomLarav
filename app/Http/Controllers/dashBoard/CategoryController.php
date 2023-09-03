@@ -38,7 +38,13 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validateForm($request, 0);
+        /*هنا اللى راجع الحقول اللى اتعمل ليها فلترة فقط لكن حقل مثل 
+        discription
+        مش هيرجع */
+        $cleanData=$request->validate( category::rules(0),[
+            'required'=>'this field [:attribute] is wanted',//هنا بنغير الرسالة اللى بتظهر لو فى حق اتبعت فاضى رساله خاصة غير المتسجلة بلارافيل
+            'name.unique'=>'this name already exists'//'هنا بنضع رسالة خاصة بالفلتر يونيك للحقل نيم فقط بنحدد لحقل معين'
+        ]);
         //$request->post('name') معناها هات الداتا اللى جايا من الحقل اللى اسمه
         //name
         // من فورم نوعها
@@ -97,7 +103,8 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $this->validateForm($request, $id);
+        $cleanData=$request->validate( category::rules($id));
+
         $request->merge([ //الحاق اى بيانات غير مذكورة بالفورم
             'slug' => Str::slug($request->post('name')) //دالة ال slug بتحذف اى مسافة او علامات مميزة مثل التعجب تخلى كل الحروف كابيتال
             //هنا سجلنا فى حقل ال slug اسم التصنيف مجرد من اى شىء لانه سوف يظهر فى الرابط
@@ -154,22 +161,5 @@ class CategoryController extends Controller
         return $path;
     }
 
-    public function validateForm(Request $request, $id)
-    {
-        //هنا الفالىديت لو حصل exception
-// مش هيكمل باقى الاكواد تحت
-        //وبيمسح خانات الادخال من الفورمة بيخزنها مؤقتا فى Session
-        //ممكن نسحب البينات عن طريق session('session name).get()
-        //لكن فى دالة اسمها old بترجع الداتا من الsession
-        $request->validate(
-            ['name' => ['string', 'required', 'min:3', 'max:255',
-                Rule::unique('category', 'name')->ignore($id)],//make name column unique except category that will edited
-                'parenId' => ['int', 'exists:category,id'],//لازم id فى جدول التصنيف يكوم موجود
-                'image' => ['image', 'max:1048576', 'dimensions:min_width=100,min_height=100'],//نوع صورة- حجم اقل من 1ميجا-ابعاد 100 عرض 100طول اقل حاجة
-                'status' => ['in:active,archived',
-                    'required']//in عبارة قائمة
-            ]
-        );//اضافة حقول الفورم
-
-    }
+ 
 }
