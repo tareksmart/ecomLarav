@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\dashBoard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\categoryRequest;
 use App\Models\category;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
@@ -38,11 +39,11 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        /*هنا اللى راجع الحقول اللى اتعمل ليها فلترة فقط لكن حقل مثل 
+        /*هنا اللى راجع الحقول اللى اتعمل ليها فلترة فقط لكن حقل مثل
         discription
         مش هيرجع */
         $cleanData=$request->validate( category::rules(0),[
-            'required'=>'this field [:attribute] is wanted',//هنا بنغير الرسالة اللى بتظهر لو فى حق اتبعت فاضى رساله خاصة غير المتسجلة بلارافيل
+           // 'required'=>'this field [:attribute] is wanted',//هنا بنغير الرسالة اللى بتظهر لو فى حق اتبعت فاضى رساله خاصة غير المتسجلة بلارافيل
             'name.unique'=>'this name already exists'//'هنا بنضع رسالة خاصة بالفلتر يونيك للحقل نيم فقط بنحدد لحقل معين'
         ]);
         //$request->post('name') معناها هات الداتا اللى جايا من الحقل اللى اسمه
@@ -101,9 +102,9 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(categoryRequest $request, string $id)//categoryRequest ريكوست مخصوص
     {
-        $cleanData=$request->validate( category::rules($id));
+        //$cleanData=$request->validate( category::rules($id));
 
         $request->merge([ //الحاق اى بيانات غير مذكورة بالفورم
             'slug' => Str::slug($request->post('name')) //دالة ال slug بتحذف اى مسافة او علامات مميزة مثل التعجب تخلى كل الحروف كابيتال
@@ -161,5 +162,5 @@ class CategoryController extends Controller
         return $path;
     }
 
- 
+
 }
