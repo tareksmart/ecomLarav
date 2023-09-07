@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Rules\customFilter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
@@ -29,7 +30,7 @@ class category extends Model
                     $fails("forbidden $attribute");//$fails عبارة عن دالة بترجع رسالة الخطا $attribute اسم الحقل اللى فيه المشكلة
                 }
 
-            }],//make name column unique except category that will edited
+            },new customFilter(['php','dart','flutter'])],//make name column unique except category that will edited
                 'parenId' => ['int', 'exists:category,id'],//لازم id فى جدول التصنيف يكوم موجود
                 'image' => ['image', 'max:1048576', 'dimensions:min_width=100,min_height=100'],//نوع صورة- حجم اقل من 1ميجا-ابعاد 100 عرض 100طول اقل حاجة
                 'status' => ['in:active,archived',

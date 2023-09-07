@@ -17,10 +17,9 @@
 {{--   من ال class
  لوالحقل name فى مشكلة يعطى لون احمر وعلامة تعجب بحقل التصنيف--}}
 {{--    شرح https://laravel.com/docs/10.x/blade#conditional-classes--}}
-    <input type="text" name="name" id="" @class([
-        'form-control',
-        'is-invalid'=>$errors->has('name')
-])  value="{{old('name',$category->name)}}">
+    {{--blade component
+    ممكن نضع نقطتين بدل من اقواس } }--}}
+<x-form.input name="name" type="text" :value="$category->name"></x-form.input>
 {{-- old function old(session value-القيمة المؤقته عند حدوث خطا,default value-القيمة الافتراضيةلوالقيمة المؤقته فارغة)--}}
     </div>
     <div class="form-group">
