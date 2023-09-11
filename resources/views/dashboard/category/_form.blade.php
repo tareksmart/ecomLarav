@@ -58,18 +58,19 @@
     </div>
     <div class="form-group">
         <label for="">status</label>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="status" id="" value="active" @checked(old('status',$category->status)=='active')>
-            <label class="form-check-label" for="">
-            active
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="status" id="" value="archived" @checked(old('status',$category->status)=='archived')>
-            <label class="form-check-label" for="">
-            archived
-            </label>
-          </div>
+        <x-form.radio :options="['active'=>'active','archived'=>'archived']" :checked="$category->status" name='status'></x-form.radio>
+{{--        <div class="form-check">--}}
+{{--            <input class="form-check-input" type="radio" name="status" id="" value="active" @checked(old('status',$category->status)=='active')>--}}
+{{--            <label class="form-check-label" for="">--}}
+{{--            active--}}
+{{--            </label>--}}
+{{--          </div>--}}
+{{--          <div class="form-check">--}}
+{{--            <input class="form-check-input" type="radio" name="status" id="" value="archived" @checked(old('status',$category->status)=='archived')>--}}
+{{--            <label class="form-check-label" for="">--}}
+{{--            archived--}}
+{{--            </label>--}}
+{{--          </div>--}}
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary">save</button>
