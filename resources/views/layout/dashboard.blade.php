@@ -60,7 +60,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
       </div>
 
       <!-- Sidebar Menu -->
-   @include('layout.widget.asidebar')
+   {{-- @include('layout.widget.asidebar') --}}
+   <x-nav/>
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->

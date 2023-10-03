@@ -58,7 +58,7 @@
     </div>
     <div class="form-group">
         <label for="">status</label>
-        <x-form.radio :options="['active'=>'active','archived'=>'archived']" :checked="$category->status" name='status'></x-form.radio>
+        <x-form.radio :options="['active'=>'active','archived'=>'archived']" :checked="$category->status" name="status"></x-form.radio>
 {{--        <div class="form-check">--}}
 {{--            <input class="form-check-input" type="radio" name="status" id="" value="active" @checked(old('status',$category->status)=='active')>--}}
 {{--            <label class="form-check-label" for="">--}}
