@@ -61,7 +61,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
       <!-- Sidebar Menu -->
    {{-- @include('layout.widget.asidebar') --}}
-   <x-nav/>
+   {{-- كومبوننت كلاس nav --}}
+   <x-nav context='جديد'/>
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
