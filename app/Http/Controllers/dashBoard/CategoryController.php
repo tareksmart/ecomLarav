@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\dashBoard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\get;
 use App\Http\Requests\categoryRequest;
 use App\Models\category;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use mysql_xdevapi\Exception;
+use PharIo\Manifest\Url;
 
 class CategoryController extends Controller
 {
@@ -19,11 +21,25 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all(); //يسحب كل الاقسام عن طريق اموديل
+        //request() تسجب الركويست اللى جاى من مثلا البحث اوالفلتر
+        //query() تسحب البارامترات اللى فى ال يوار ال
+        $request=request();//  ثم الكويرى 
+    
+        $query=category::query();//كاننا عملنا كويرى من جدول الافسام بس لسه لم نضع الشروط
+        if($name=$request->query('name')){
+            $query->where('name','LIKE',"%{$name}%");
+        }
+        if($status=$request->query('status')){
+            $query->where('status','=',$status);
+        }
+    
+        // $categories = Category::all(); //يسحب كل الاقسام عن طريق اموديل
+        // $categories = Category::paginate(2);//سحب قسمين
+        $categories=$query->paginate(2);
+        
         return view('dashboard.category.index', compact('categories'));
         //       return $categories;
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -87,13 +103,22 @@ class CategoryController extends Controller
             //هات كل الاقسام ماعدا القسم اللى انا اديتك ال id بتاعه
             //وخزنه فى المتغير $parents
             //عشان نملى بيه ال كومبوبوكس او هنا اسمه Select
-            echo 'suc';
+            //echo 'suc';
         } catch (Exception $e) {
             echo 'fail';
             return redirect()->route('dashboard.category.index')->with('info', 'record not found');
         }
         //احضار كل الابهات ماعدا التصنيف المطلوب تعديله وابناء التصنيف المطلوب تعديله
-        $parents = category::where('id', '<>', $id)->where('parentId', '<>', $id)->get();
+        //واحضار كل الابهات اللى ملهاش اب يعنى قيمته نل
+        //use($id) لتمرير المتغير داخل الكلوجر فانكشن
+        //استخدام الكلوجر فانكشن لعمل قوس الشروط الاخرى
+        //where->where معناها حيث كذا اند كذا لان كلمة اند لاتكتب  لكن اور تكتب
+        // // SELECT * FROM categories WHERE id <> $id 
+        // AND (parent_id IS NULL OR parent_id <> $id)
+        $parents = category::where('id', '<>', $id)->where(function($query) use ($id){
+            $query->whereNull('parentId')->orWhere('parentId', '<>', $id);
+        })->get();
+        
 
 
         return view('dashboard.category.edit', compact(['category', 'parents']));

@@ -20,12 +20,29 @@
     </div>
 
 @endif
+<form action="{{URL::current()}}" method="get" class="d-flex justify-content-between mb-4">
+<x-form.input name="name" placeholder="name" :value="request('name')" class="mx-2"/>
+<select name="status" id="" class="form-control mx-2" >
+<option value="">all</option>
+{{--
+    @selected(request('status')=='active')
+    بعد الضغط على فلنر مايخفيش المحدد يعنى اخترت اكتيف وضغطت فلتر يخلى كلمة اكتيف محددة
+     متروحش كذلك فوق عند قيمة الاسم جبنا الاسم
+    المبحوث عنه من الريكيست بارامتر
+    
+    --}}
+<option value="active" @selected(request('status')=='active')>active</option>
+<option value="archived" @selected(request('status')=='archived')>archived</option>
+</select>
+<button class="btn btn-dark mx-2">filter</button>
+</form>
   <table class="table">
     <thread>
         <tr>
             <th></th>
             <th>ID</th>
             <th>Name</th>
+            <th>status</th>
             <th>Parent</th>
             <th>created at</th>
             <th colspan="2"></th>
@@ -37,6 +54,7 @@
             <td><img src="{{asset('storage/'. $item->image)}}" alt="" height="60"></td>
             <td>{{$item->id}}</td>
             <td>{{$item->name}}</td>
+            <td>{{$item->status}}</td>
             <td>{{$item->parentId}}</td>
             <td>{{$item->created_at}}</td>
             <td>
@@ -70,6 +88,10 @@
     </tbody>
   </table>
 {{-- </div> --}}
+{{$categories->withQueryString()->links()}}{{--لاظهار السابق والتالى تبع الباجينيشن
+    لاظهار شكل بوتستراب لان ده بياخد من التالويند نروح على الفولدر
+    app->providers->appserviceprovider
+    withQueryString حفظ البرامترات موجوده باليو ار ال--}}
 @endsection
 
 @section('breadcrumb')

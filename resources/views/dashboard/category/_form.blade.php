@@ -12,7 +12,7 @@
         </div>
 
 @endif
-@extends('layout.dashboard')
+
 <div class="form-group">
     <label for="categoryName">Category Name</label>
 {{--   من ال class
