@@ -55,7 +55,7 @@
             <td>{{$item->id}}</td>
             <td>{{$item->name}}</td>
             <td>{{$item->status}}</td>
-            <td>{{$item->parentId}}</td>
+            <td>{{$item->parent_name}}</td>
             <td>{{$item->created_at}}</td>
             <td>
                 <a href="{{route('dashboard.category.edit',$item->id)}}" class="btn btn-sm btn-outline-success">Edite</a>

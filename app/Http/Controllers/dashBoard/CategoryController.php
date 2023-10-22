@@ -26,17 +26,31 @@ class CategoryController extends Controller
         $request=request();//  ثم الكويرى 
     
         $query=category::query();//كاننا عملنا كويرى من جدول الافسام بس لسه لم نضع الشروط
-        if($name=$request->query('name')){
-            $query->where('name','LIKE',"%{$name}%");
-        }
-        if($status=$request->query('status')){
-            $query->where('status','=',$status);
-        }
+        // if($name=$request->query('name')){
+        //     $query->where('name','LIKE',"%{$name}%");
+        // }
+        // if($status=$request->query('status')){
+        //     $query->where('status','=',$status);
+        // }
     
         // $categories = Category::all(); //يسحب كل الاقسام عن طريق اموديل
         // $categories = Category::paginate(2);//سحب قسمين
-        $categories=$query->paginate(2);
+    //    $categories=$query->paginate(4);
+        // $categories=category::status($request->query('status'))->paginate(2);//locale scope
+        //$request->query() بترجع مصفوفة من البارمترات اللى موجوده فى ال url
+        //تم عمل جوين لنفس الجدول باستخدام الياس
+        //لفهمهافديو Eloquent Model Local Scopes
+        //جملة ال سى كوال المنقذه
+          // SELECT a.*, b.name as parent_name
+        // FROM categories as a
+        // LEFT JOIN categories as b ON b.id = a.parent_id
+        $categories=category::leftJoin('category as parents','parents.id','=','category.parentId')->
+        select([
+            'category.*','parents.name as parent_name'
+        ])->
+
         
+        filter($request->query())->orderBy('category.name','desc')->paginate(3);
         return view('dashboard.category.index', compact('categories'));
         //       return $categories;
     }
