@@ -13,7 +13,21 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('store_id')->constrained('stores')->cascadeOnDelete();
+            $table->foreignId('category_id')->constrained('category')->nullOnDelete();
+            $table->string('name');
+            $table->string('slug')->unique();
+            $table->text('discription')->nullable();
+            $table->string('image')->nullable();
+            $table->float('price')->default(0);
+            $table->float('compare_price')->nullable();//سعر للخصومات
+            $table->json('option')->nullable();
+            $table->float('rating')->default(0);
+            $table->boolean('featured')->default(0);//الصنف مميز او لا
+            $table->enum('status',['active','draft','archived'])->default('active');//draft لصنف تحت اانشاء
+
             $table->timestamps();
+           $table->softDeletes();
         });
     }
 

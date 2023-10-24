@@ -3,6 +3,10 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\category;
+use App\Models\Product;
+use App\Models\Store;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,6 +23,11 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $this->call(UserSeeder::class);
+        // $this->call(UserSeeder::class);
+        //ستور فاكتورى تم استدعائه من موديل ال ستور ازاى عرفه؟ عرفه من المسمى
+        Store::factory(3)->create();//اعمل 3 مخازن مزيف
+        category::factory(5)->create();
+        Product::factory(20)->create();
+        //php artisan db:seed
     }
 }
