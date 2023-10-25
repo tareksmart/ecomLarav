@@ -49,7 +49,6 @@ class CategoryController extends Controller
             'category.*','parents.name as parent_name'
         ])->
 
-        
         filter($request->query())->orderBy('category.name','desc')->paginate(3);
         return view('dashboard.category.index', compact('categories'));
         //       return $categories;
@@ -112,7 +111,8 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        try {
+        try
+       {
             $category = category::findOrFail($id);
             //هات كل الاقسام ماعدا القسم اللى انا اديتك ال id بتاعه
             //وخزنه فى المتغير $parents

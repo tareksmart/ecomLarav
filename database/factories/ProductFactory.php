@@ -23,7 +23,7 @@ class ProductFactory extends Factory
         return [
             'name'=>$name,
             'slug'=>Str::slug($name),
-            'description'=>$this->faker->sentences(5),//اعمل داتا مزيفة ب5 جمل
+            'discription'=>$this->faker->sentences(5,true),//اعمل داتا مزيفة ب5 جمل
             'image'=>$this->faker->imageUrl(),
             'price'=>$this->faker->randomFloat(1,1,499),//اعمل اسعار عشوائية عدد عشرى واحد من 1 الى 499
             'compare_price'=>$this->faker->randomFloat(1,500,999),

@@ -20,7 +20,7 @@ class CategoryFactory extends Factory
         return [
             'name'=>$name,
             'slug'=>Str::slug($name),
-            'description'=>$this->faker->sentences(5),//اعمل داتا مزيفة ب5 جمل
+            'description'=>$this->faker->sentences(5,true),//اعمل داتا مزيفة ب5 جمل
             'image'=>$this->faker->imageUrl(),
         
         ];

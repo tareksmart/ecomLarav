@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\dashBoard\CategoryController;
+use App\Http\Controllers\dashboard\ProductController;
 use App\Http\Controllers\DashBoardController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,6 +13,7 @@ Route::group([
 ///سيصبح dashboard/dashboard/category كمثال 
 ],function(){
     Route::resource('/category',CategoryController::class);
+    Route::resource('/products',ProductController::class);
 
     Route::get('/', [DashBoardController::class,'index'])
     ->name('dashboard');
